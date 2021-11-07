@@ -1,24 +1,32 @@
-import { useState } from "react";
-import logo from './logo.svg';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+} from "react-router-dom";
 import './App.css';
-import AuthHoc from "./hoc/Auth";
-import ErrorBoundary from "./hoc/ErrorBoundary";
+import Message from "./components/Message";
+import Home from "./pages/Home";
+import Header from "./partials/Header";
+import Content from "./partials/Content";
+import Aside from "./partials/Aside";
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" onClick={() => setIsAuthenticated(true)} />
-
-          <ErrorBoundary>
-              <AuthHoc isAuthenticated={isAuthenticated}>
-                  <p>Success</p>
-              </AuthHoc>
-          </ErrorBoundary>
-
-      </header>
+        <Router>
+            <Header />
+            <Aside />
+            <Content>
+                <Switch>
+                    <Route path="/message">
+                        <Message />
+                    </Route>
+                    <Route path="/">
+                        <Home />
+                    </Route>
+                </Switch>
+            </Content>
+        </Router>
     </div>
   );
 }
